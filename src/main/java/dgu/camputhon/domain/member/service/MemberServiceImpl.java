@@ -42,6 +42,7 @@ public class MemberServiceImpl implements MemberService {
                 .memberName(signupRequest.getMemberName())
                 .email(signupRequest.getMemberEmail())
                 .memberPassword(signupRequest.getMemberPassword())
+                .challengeNum(0L)
                 .build();
 
         memberRepository.save(member);
