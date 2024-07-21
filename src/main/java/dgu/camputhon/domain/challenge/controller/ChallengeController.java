@@ -4,11 +4,9 @@ import dgu.camputhon.domain.challenge.service.ChallengeService;
 import dgu.camputhon.global.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeGetResponse;
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeDetailResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,5 +23,13 @@ public class ChallengeController {
             @RequestParam Long memberId) {
         List<ChallengeGetResponse> challenges = challengeService.getChallengesByDateAndMemberId(date, memberId);
         return ApiResponse.onSuccess(challenges);
+    }
+
+    @GetMapping("/get/calendar/detail/{challengeId}/{memberId}")
+    public ApiResponse<ChallengeDetailResponse> getChallengeDetail(
+            @PathVariable Long challengeId,
+            @PathVariable Long memberId) {
+        ChallengeDetailResponse challengeDetail = challengeService.getChallengeDetail(challengeId, memberId);
+        return ApiResponse.onSuccess(challengeDetail);
     }
 }

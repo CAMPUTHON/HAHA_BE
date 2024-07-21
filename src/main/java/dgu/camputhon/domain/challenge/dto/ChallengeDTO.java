@@ -18,5 +18,17 @@ public class ChallengeDTO {
             private String challengeTime;
             private String challengeCategory;
         }
+
+        @Getter
+        @Builder
+        @AllArgsConstructor
+        public static class ChallengeDetailResponse {
+            private String challengeTitle;
+            private String challengeTime;
+            private String challengeCategory;
+            private String date;
+            private String status;
+            private String image;
+        }
     }
 }

@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
-    @Transactional
     public LoginResponse login(LoginRequest loginRequest) {
         Member member = memberRepository.findByEmail(loginRequest.getMemberEmail())
                 .orElseThrow(() -> new RuntimeException("해당 멤버가 존재하지 않습니다."));
@@ -28,7 +28,6 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
-    @Transactional
     public void signup(SignupRequest signupRequest) {
         if (!signupRequest.getMemberPassword().equals(signupRequest.getMemberPasswordConfirm())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
