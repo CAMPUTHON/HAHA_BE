@@ -184,15 +184,15 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     private Integer convertTimeToId(String time) {
         switch (time.toLowerCase()) {
-            case "30min":
+            case "30m":
                 return 1;
-            case "1hour":
+            case "1h":
                 return 2;
-            case "2hours":
+            case "2h":
                 return 3;
-            case "3hours":
+            case "3h":
                 return 4;
-            case "4hours":
+            case "4h":
                 return 5;
             default:
                 throw new IllegalArgumentException("Invalid time: " + time);
