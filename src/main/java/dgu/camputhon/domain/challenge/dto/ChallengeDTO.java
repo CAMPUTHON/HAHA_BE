@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @Builder
@@ -39,6 +41,24 @@ public class ChallengeDTO {
             private Long memberId;
             private String status;
             private String startDate;
+        }
+
+        @Getter
+        @Builder
+        @AllArgsConstructor
+        public static class CurrentAndRecommendedChallengesResponse {
+            private List<ChallengesResponse> currentChallenges;
+            private List<ChallengesResponse> recommendedChallenges;
+        }
+
+        @Getter
+        @Builder
+        public static class ChallengesResponse {
+            private Long challengeId;
+            private String challengeTitle;
+            private String challengeTime;
+            private String challengeCategory;
+            private String status;
         }
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeGetResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeDetailResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.AddChallengeResponse;
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentAndRecommendedChallengesResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -39,6 +40,13 @@ public class ChallengeController {
             @PathVariable Long challengeId,
             @PathVariable Long memberId) {
         AddChallengeResponse response = challengeService.addChallenge(challengeId, memberId);
+        return ApiResponse.onSuccess(response);
+    }
+
+    @GetMapping("/get/{memberId}")
+    public ApiResponse<CurrentAndRecommendedChallengesResponse> getCurrentAndRecommendedChallenges(
+            @PathVariable Long memberId) {
+        CurrentAndRecommendedChallengesResponse response = challengeService.getCurrentAndRecommendedChallenges(memberId);
         return ApiResponse.onSuccess(response);
     }
 }
