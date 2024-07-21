@@ -31,4 +31,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private Set<MemberChallenge> memberChallenges;
+
+    public void updateProfile(String memberName, String email) {
+        this.memberName = memberName;
+        this.email = email;
+    }
 }
