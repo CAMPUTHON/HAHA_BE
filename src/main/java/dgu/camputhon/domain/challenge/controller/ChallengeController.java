@@ -1,5 +1,6 @@
 package dgu.camputhon.domain.challenge.controller;
 
+import dgu.camputhon.config.S3Manager;
 import dgu.camputhon.domain.challenge.service.ChallengeService;
 import dgu.camputhon.global.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.AddChal
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentAndRecommendedChallengesResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentChallengeDetailResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeSearchResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/challenge")
 public class ChallengeController {
     private final ChallengeService challengeService;
+    private final S3Manager s3Manager;
 
     // 완료한 챌린지 조회
     @GetMapping("/get/calendar")
@@ -72,5 +75,15 @@ public class ChallengeController {
             @RequestParam String time) {
         List<ChallengeSearchResponse> response = challengeService.searchChallenges(category, time);
         return ApiResponse.onSuccess(response);
+    }
+
+    // 챌린지 완료 처리
+    @PostMapping("/complete/{challengeId}/{memberId}")
+    public ApiResponse<String> completeChallenge(
+            @PathVariable Long challengeId,
+            @PathVariable Long memberId,
+            @RequestParam("file") MultipartFile file) {
+        String imageUrl = s3Manager.uploadFile(file);
+        return ApiResponse.onSuccess(challengeService.completeChallenge(challengeId, memberId, imageUrl));
     }
 }

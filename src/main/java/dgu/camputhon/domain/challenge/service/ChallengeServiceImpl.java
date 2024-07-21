@@ -48,6 +48,7 @@ public class ChallengeServiceImpl implements ChallengeService {
 
         return memberChallenges.stream()
                 .map(memberChallenge -> ChallengeGetResponse.builder()
+                        .challengeId(memberChallenge.getChallenge().getChallengeId())
                         .challengeTitle(memberChallenge.getChallenge().getChallengeTitle())
                         .challengeTime(memberChallenge.getChallenge().getTimeCategory().getTimeCategoryName().toString())
                         .challengeCategory(memberChallenge.getChallenge().getCategory().getChallengeCategoryName().toString())
@@ -196,5 +197,21 @@ public class ChallengeServiceImpl implements ChallengeService {
             default:
                 throw new IllegalArgumentException("Invalid time: " + time);
         }
+    }
+
+    public String completeChallenge(Long challengeId, Long memberId, String imageUrl) {
+        MemberChallenge memberChallenge = memberChallengeRepository.findByChallenge_ChallengeIdAndMember_MemberId(challengeId, memberId)
+                .orElseThrow(() -> new RuntimeException("진행 중인 챌린지를 찾을 수 없습니다."));
+
+        // 상태를 COMPLETED로 변경하고 완료 시간을 설정
+        memberChallenge.completeChallenge(imageUrl);
+        memberChallengeRepository.save(memberChallenge);
+
+        // 멤버의 챌린지 수를 증가
+        Member member = memberChallenge.getMember();
+        member.updateChallengeNum(member.getChallengeNum() + 1);
+        memberRepository.save(member);
+
+        return imageUrl;
     }
 }

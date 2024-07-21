@@ -17,4 +17,5 @@ public interface ChallengeService {
     CurrentAndRecommendedChallengesResponse getCurrentAndRecommendedChallenges(Long memberId);
     CurrentChallengeDetailResponse getCurrentChallengeDetail(Long challengeId, Long memberId);
     List<ChallengeSearchResponse> searchChallenges(String category, String time);
+    String completeChallenge(Long challengeId, Long memberId, String imageUrl);
 }

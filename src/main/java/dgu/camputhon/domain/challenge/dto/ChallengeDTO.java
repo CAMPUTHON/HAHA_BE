@@ -16,6 +16,7 @@ public class ChallengeDTO {
         @Builder
         @AllArgsConstructor
         public static class ChallengeGetResponse {
+            private Long challengeId;
             private String challengeTitle;
             private String challengeTime;
             private String challengeCategory;

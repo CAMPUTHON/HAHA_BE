@@ -1,6 +1,7 @@
 package dgu.camputhon.domain.member.entity;
 
 import dgu.camputhon.domain.challenge.entity.MemberChallenge;
+import dgu.camputhon.domain.challenge.entity.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,5 +36,9 @@ public class Member {
     public void updateProfile(String memberName, String email) {
         this.memberName = memberName;
         this.email = email;
+    }
+
+    public void updateChallengeNum(Long challengeNum) {
+        this.challengeNum = challengeNum;
     }
 }

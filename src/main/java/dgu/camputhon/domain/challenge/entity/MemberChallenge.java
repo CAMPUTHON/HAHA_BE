@@ -36,4 +36,10 @@ public class MemberChallenge {
     @JoinColumn(name = "memberId")
     private Member member;
 
+    public void completeChallenge(String imageUrl) {
+        this.status = Status.COMPLETED;
+        this.image = imageUrl;
+        this.completedAt = LocalDateTime.now();
+    }
+
 }
