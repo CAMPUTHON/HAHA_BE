@@ -20,8 +20,7 @@ public class TimeCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long timeCategoryId;
 
-    @Enumerated(EnumType.STRING)
-    private TimeCategoryName timeCategoryName;
+    private String timeCategoryName;
 
     @OneToMany(mappedBy = "timeCategory")
     private Set<Challenge> challenges;

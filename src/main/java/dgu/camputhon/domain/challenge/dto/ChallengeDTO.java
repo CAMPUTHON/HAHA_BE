@@ -30,5 +30,15 @@ public class ChallengeDTO {
             private String status;
             private String image;
         }
+
+        @Getter
+        @Builder
+        @AllArgsConstructor
+        public static class AddChallengeResponse {
+            private Long challengeId;
+            private Long memberId;
+            private String status;
+            private String startDate;
+        }
     }
 }

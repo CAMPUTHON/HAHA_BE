@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeGetResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeDetailResponse;
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.AddChallengeResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,5 +32,13 @@ public class ChallengeController {
             @PathVariable Long memberId) {
         ChallengeDetailResponse challengeDetail = challengeService.getChallengeDetail(challengeId, memberId);
         return ApiResponse.onSuccess(challengeDetail);
+    }
+
+    @PostMapping("/add/{challengeId}/{memberId}")
+    public ApiResponse<AddChallengeResponse> addChallenge(
+            @PathVariable Long challengeId,
+            @PathVariable Long memberId) {
+        AddChallengeResponse response = challengeService.addChallenge(challengeId, memberId);
+        return ApiResponse.onSuccess(response);
     }
 }

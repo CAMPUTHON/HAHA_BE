@@ -21,8 +21,7 @@ public class ChallengeCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long challengeCategoryId;
 
-    @Enumerated(EnumType.STRING)
-    private ChallengeCategoryName challengeCategoryName;
+    private String challengeCategoryName;
 
     @OneToMany(mappedBy = "category")
     private Set<Challenge> challenges;
