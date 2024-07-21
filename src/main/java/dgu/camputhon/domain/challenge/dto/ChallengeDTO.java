@@ -72,5 +72,15 @@ public class ChallengeDTO {
             private String status;
             private String description;
         }
+
+        @Getter
+        @Builder
+        @AllArgsConstructor
+        public static class ChallengeSearchResponse {
+            private Long challengeId;
+            private String challengeTitle;
+            private String challengeTime;
+            private String challengeCategory;
+        }
     }
 }

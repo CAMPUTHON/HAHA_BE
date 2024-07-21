@@ -10,6 +10,7 @@ import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.Challen
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.AddChallengeResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentAndRecommendedChallengesResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentChallengeDetailResponse;
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeSearchResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -61,6 +62,15 @@ public class ChallengeController {
             @PathVariable Long challengeId,
             @PathVariable Long memberId) {
         CurrentChallengeDetailResponse response = challengeService.getCurrentChallengeDetail(challengeId, memberId);
+        return ApiResponse.onSuccess(response);
+    }
+
+    // 챌린지 검색
+    @GetMapping("/search")
+    public ApiResponse<List<ChallengeSearchResponse>> searchChallenges(
+            @RequestParam String category,
+            @RequestParam String time) {
+        List<ChallengeSearchResponse> response = challengeService.searchChallenges(category, time);
         return ApiResponse.onSuccess(response);
     }
 }

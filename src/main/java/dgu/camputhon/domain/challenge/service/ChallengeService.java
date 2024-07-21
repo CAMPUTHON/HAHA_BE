@@ -4,6 +4,7 @@ import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.Challen
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.AddChallengeResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentAndRecommendedChallengesResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentChallengeDetailResponse;
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeSearchResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,5 +16,5 @@ public interface ChallengeService {
     AddChallengeResponse addChallenge(Long challengeId, Long memberId);
     CurrentAndRecommendedChallengesResponse getCurrentAndRecommendedChallenges(Long memberId);
     CurrentChallengeDetailResponse getCurrentChallengeDetail(Long challengeId, Long memberId);
-
+    List<ChallengeSearchResponse> searchChallenges(String category, String time);
 }

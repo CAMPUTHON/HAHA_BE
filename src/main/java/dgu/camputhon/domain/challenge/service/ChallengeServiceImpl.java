@@ -16,10 +16,11 @@ import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.AddChal
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentAndRecommendedChallengesResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentChallengesResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentChallengeDetailResponse;
-
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengeSearchResponse;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -147,5 +148,53 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .status(memberChallenge.getStatus().toString())
                 .description(memberChallenge.getChallenge().getChallengeCategoryDescription())
                 .build();
+    }
+
+    public List<ChallengeSearchResponse> searchChallenges(String category, String time) {
+        Long categoryId = Long.valueOf(convertCategoryToId(category));
+        Long timeCategoryId = Long.valueOf(convertTimeToId(time));
+
+        List<Challenge> filteredChallenges = challengeRepository.findByCategory_ChallengeCategoryIdAndTimeCategory_TimeCategoryId(categoryId, timeCategoryId);
+        Collections.shuffle(filteredChallenges);
+        List<Challenge> randomChallenges = filteredChallenges.stream().limit(10).collect(Collectors.toList());
+
+        return randomChallenges.stream()
+                .map(challenge -> ChallengeSearchResponse.builder()
+                        .challengeId(challenge.getChallengeId())
+                        .challengeTitle(challenge.getChallengeTitle())
+                        .challengeTime(challenge.getTimeCategory().getTimeCategoryName())
+                        .challengeCategory(challenge.getCategory().getChallengeCategoryName())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private Integer convertCategoryToId(String category) {
+        switch (category.toUpperCase()) {
+            case "HEALTH":
+                return 1;
+            case "STUDY":
+                return 2;
+            case "LEISURE":
+                return 3;
+            default:
+                throw new IllegalArgumentException("Invalid category: " + category);
+        }
+    }
+
+    private Integer convertTimeToId(String time) {
+        switch (time.toLowerCase()) {
+            case "30min":
+                return 1;
+            case "1hour":
+                return 2;
+            case "2hours":
+                return 3;
+            case "3hours":
+                return 4;
+            case "4hours":
+                return 5;
+            default:
+                throw new IllegalArgumentException("Invalid time: " + time);
+        }
     }
 }
