@@ -1,6 +1,9 @@
 HELP.md
-.gradle
+.gradle/
+.idea/
 build/
+.gradle/8.8/executionHistory/executionHistory.lock
+.gradle/8.8/fileHashes/fileHashes.lock
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
