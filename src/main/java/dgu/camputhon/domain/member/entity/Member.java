@@ -25,6 +25,7 @@ public class Member {
     private Long memberId;
     private String memberPassword;
     private String memberName;
+    private String email;
     private Long challengeNum;
     private Long timeSum;
 
