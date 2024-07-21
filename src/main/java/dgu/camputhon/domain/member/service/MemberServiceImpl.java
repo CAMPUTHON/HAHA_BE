@@ -9,8 +9,6 @@ import dgu.camputhon.domain.member.dto.MemberDTO.MemberRequest.SignupRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {

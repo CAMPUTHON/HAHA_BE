@@ -6,12 +6,11 @@ import dgu.camputhon.domain.member.service.MemberService;
 import dgu.camputhon.global.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import dgu.camputhon.domain.member.dto.MemberDTO.MemberRequest.SignupRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api") // API 경로 설정
+@RequestMapping("/api/member")
 public class MemberController {
 
     private final MemberService memberService;
@@ -25,5 +24,10 @@ public class MemberController {
     public ApiResponse<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         LoginResponse loginResponse = memberService.login(loginRequest);
         return ApiResponse.onSuccess(loginResponse);
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<String> logout() {
+        return ApiResponse.onSuccess("로그아웃");
     }
 }
