@@ -47,18 +47,30 @@ public class ChallengeDTO {
         @Builder
         @AllArgsConstructor
         public static class CurrentAndRecommendedChallengesResponse {
-            private List<ChallengesResponse> currentChallenges;
-            private List<ChallengesResponse> recommendedChallenges;
+            private List<CurrentChallengesResponse> currentChallenges;
+            private List<CurrentChallengesResponse> recommendedChallenges;
         }
 
         @Getter
         @Builder
-        public static class ChallengesResponse {
+        public static class CurrentChallengesResponse {
             private Long challengeId;
             private String challengeTitle;
             private String challengeTime;
             private String challengeCategory;
             private String status;
+        }
+
+        @Getter
+        @Builder
+        @AllArgsConstructor
+        public static class CurrentChallengeDetailResponse {
+            private Long challengeId;
+            private String challengeTitle;
+            private String challengeTime;
+            private String challengeCategory;
+            private String status;
+            private String description;
         }
     }
 }

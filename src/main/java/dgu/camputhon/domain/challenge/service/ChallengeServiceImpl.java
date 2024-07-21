@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.AddChallengeResponse;
 import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentAndRecommendedChallengesResponse;
-import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.ChallengesResponse;
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentChallengesResponse;
+import dgu.camputhon.domain.challenge.dto.ChallengeDTO.ChallengeResponse.CurrentChallengeDetailResponse;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -96,8 +98,8 @@ public class ChallengeServiceImpl implements ChallengeService {
         List<Status> inProgressStatuses = List.of(Status.IN_PROGRESS, Status.COMPLETED);
         List<MemberChallenge> currentChallenges = memberChallengeRepository.findByMemberAndStatusIn(member, inProgressStatuses);
 
-        List<ChallengesResponse> currentChallengesResponse = currentChallenges.stream()
-                .map(memberChallenge -> ChallengesResponse.builder()
+        List<CurrentChallengesResponse> currentChallengesResponse = currentChallenges.stream()
+                .map(memberChallenge -> CurrentChallengesResponse.builder()
                         .challengeId(memberChallenge.getChallenge().getChallengeId())
                         .challengeTitle(memberChallenge.getChallenge().getChallengeTitle())
                         .challengeTime(memberChallenge.getChallenge().getTimeCategory().getTimeCategoryName().toString())
@@ -109,8 +111,8 @@ public class ChallengeServiceImpl implements ChallengeService {
         List<Challenge> allChallenges = challengeRepository.findAll();
         List<Challenge> recommendedChallenges = getRandomChallenges(allChallenges, 5);
 
-        List<ChallengesResponse> recommendedChallengesResponse = recommendedChallenges.stream()
-                .map(challenge -> ChallengesResponse.builder()
+        List<CurrentChallengesResponse> recommendedChallengesResponse = recommendedChallenges.stream()
+                .map(challenge -> CurrentChallengesResponse.builder()
                         .challengeId(challenge.getChallengeId())
                         .challengeTitle(challenge.getChallengeTitle())
                         .challengeTime(challenge.getTimeCategory().getTimeCategoryName().toString())
@@ -131,5 +133,19 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .limit(count)
                 .mapToObj(challenges::get)
                 .collect(Collectors.toList());
+    }
+
+    public CurrentChallengeDetailResponse getCurrentChallengeDetail(Long challengeId, Long memberId) {
+        MemberChallenge memberChallenge = memberChallengeRepository.findByChallenge_ChallengeIdAndMember_MemberId(challengeId, memberId)
+                .orElseThrow(() -> new RuntimeException("진행 중인 챌린지를 찾을 수 없습니다."));
+
+        return CurrentChallengeDetailResponse.builder()
+                .challengeId(challengeId)
+                .challengeTitle(memberChallenge.getChallenge().getChallengeTitle())
+                .challengeTime(memberChallenge.getChallenge().getTimeCategory().getTimeCategoryName().toString())
+                .challengeCategory(memberChallenge.getChallenge().getCategory().getChallengeCategoryName().toString())
+                .status(memberChallenge.getStatus().toString())
+                .description(memberChallenge.getChallenge().getChallengeCategoryDescription())
+                .build();
     }
 }
