@@ -24,8 +24,6 @@ public class ChallengeCategory {
     @Enumerated(EnumType.STRING)
     private ChallengeCategoryName challengeCategoryName;
 
-    private String challengeCategoryDescription;
-
     @OneToMany(mappedBy = "category")
     private Set<Challenge> challenges;
 

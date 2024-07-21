@@ -26,6 +26,8 @@ public class Challenge {
     @JoinColumn(name = "categoryId")
     private ChallengeCategory category;
 
+    private String challengeCategoryDescription;
+
     @ManyToOne
     @JoinColumn(name = "timeCategoryId")
     private TimeCategory timeCategory;
