@@ -147,6 +147,7 @@ public class ChallengeServiceImpl implements ChallengeService {
                 .challengeTime(memberChallenge.getChallenge().getTimeCategory().getTimeCategoryName().toString())
                 .challengeCategory(memberChallenge.getChallenge().getCategory().getChallengeCategoryName().toString())
                 .status(memberChallenge.getStatus().toString())
+                .image(memberChallenge.getImage())
                 .description(memberChallenge.getChallenge().getChallengeCategoryDescription())
                 .build();
     }

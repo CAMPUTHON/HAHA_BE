@@ -71,6 +71,7 @@ public class ChallengeDTO {
             private String challengeTime;
             private String challengeCategory;
             private String status;
+            private String image;
             private String description;
         }
 
